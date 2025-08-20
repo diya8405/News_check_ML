@@ -1,0 +1,161 @@
+<!-- fakenews_app/templates/predict.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>News Detector</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f4f4f6;
+            color: #2a2a2a;
+            margin: 0;
+            padding: 60px 20px 20px;
+        }
+
+        .top-bar {
+            width: 100%;
+            display: flex;
+            justify-content: flex-end;
+            padding: 20px 40px 0;
+        }
+
+        .logout-button {
+            padding: 10px 20px;
+            background-color: #ef4444;
+            color: white;
+            border: none;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            text-decoration: none;
+        }
+
+        .logout-button:hover {
+            background-color: #dc2626;
+            transform: translateY(-1px);
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 40px;
+            color: #1a1a1a;
+        }
+
+        form {
+            width: 100%;
+            max-width: 700px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+        }
+
+        form:hover {
+            box-shadow: 0 8px 22px rgba(0, 0, 0, 0.12);
+        }
+
+        textarea {
+            width: 100%;
+            font-size: 16px;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #d0d0d0;
+            background-color: #fafafa;
+            resize: vertical;
+        }
+
+        textarea:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+            outline: none;
+            background-color: #fff;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 12px 30px;
+            background-color: #3b82f6;
+            color: white;
+            border: none;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #2563eb;
+            transform: translateY(-1px);
+        }
+
+        .result-box {
+            margin: 30px auto 0;
+            padding: 20px 25px;
+            background-color: #ffffff;
+            border-left: 5px solid #3b82f6;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            font-size: 18px;
+            font-weight: 500;
+            color: #1a1a1a;
+            max-width: 700px;
+            width: 100%;
+        }
+
+        @media (max-width: 600px) {
+            .top-bar {
+                justify-content: center;
+                padding: 20px;
+            }
+
+            form {
+                padding: 30px 20px;
+            }
+
+            textarea {
+                height: 160px;
+            }
+
+            button {
+                width: 100%;
+            }
+
+            .result-box {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Top bar with logout -->
+    <div class="top-bar">
+        <a href="{% url 'logout' %}" class="logout-button">Logout</a>
+    </div>
+
+    <h2>Fake News Detector</h2>
+
+    <form method="POST">
+        {% csrf_token %}
+        <textarea name="news" rows="10" placeholder="Paste or write news article content here..."></textarea>
+        <button type="submit">Predict</button>
+    </form>
+
+    {% if result %}
+        <div class="result-box">
+            Prediction: {{ result }}
+        </div>
+    {% endif %}
+</body>
+</html>
